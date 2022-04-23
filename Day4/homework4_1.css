@@ -1,0 +1,17 @@
+.container {
+    height: 1200px;
+    display: flex;
+    flex-direction: row;
+    background-color: rosybrown;
+    justify-content: space-around;
+}
+
+.row {
+    background-color: whitesmoke;
+    margin: 10px;
+    width: 33%;
+}
+
+.item {
+    height: 33%;
+}

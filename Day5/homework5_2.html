@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Homework5_2</title>
+</head>
+
+<style>
+    table tr {
+        border: 1px solid black;
+    }
+
+    th {
+        border: 1px solid gold;
+        margin: auto;
+        background-color: azure;
+    }
+
+    .center {
+        margin-right: auto;
+        margin-left: auto;
+    }
+</style>
+
+<body>
+    <table class="center">
+        <tr>
+            <th>Category</th>
+            <th>Case</th>
+            <th>Today Cases</th>
+            <th>Deaths</th>
+            <th>Today Deaths</th>
+            <th>Recovered</th>
+            <th>Today Recovered</th>
+            <th>Active</th>
+            <th>Critical</th>
+        </tr>
+    </table>
+
+    <script>
+
+        let covidData;
+        let objWorld;
+        axios.get('https://corona.lmao.ninja/v2/all').then(function (response) {
+             covidData = response.data;
+            // console.log(covidData);
+             objWorld = { "world": covidData };
+            // console.log(objWorld);
+            for(let i=0; i<objWorld.length; i++){
+                let worldCase = objWorld.case;
+                let worldTodayCase = objWorld.todayCase;
+                let worldDeaths = objWorld.deaths;
+                let worldRecovered = objWorld.recovered;
+                let worldTodayRecovered = objWorld.todayRecovered;
+                let worldActive = objWorld.active;
+                let worldCritical = objWorld.critical;
+            }
+            console.log(covidData);
+            console.log(objWorld);
+        });
+
+        axios.get('https://corona.lmao.ninja/v2/countries/thailand').then(function (response) {
+            // console.log(response);
+            let covidData = response.data;
+            let objThai = { "Thai": covidData };
+            console.log(objThai);
+
+        });
+
+
+    </script>
+
+
+</body>
+
+</html>

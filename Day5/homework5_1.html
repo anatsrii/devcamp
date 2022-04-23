@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Homework 1.2</title>
+</head>
+<style>
+       table tr td {
+            border:1px solid red;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+
+</style>
+
+<body>
+    <h1>Hello Req & Res User !!!</h1>
+    <div id="resultDisplay"></div>
+    <table><tr id="rowDisplayName"></tr></table>
+    <!-- <table><tr id="rowDisplayEmail"></tr></table> -->
+    
+    <script>
+        axios.get('https://reqres.in/api/users?delay=3').then(function(response){
+            console.log(response);
+            let rowDisplay = document.getElementById('rowDisplayName');
+            let textHtml = '';
+            for (let i=0; i<response.data.data.length; i++) {
+                // let email = "<td>" + response.data.data[i].email + "</td>";
+                let img = "<p><img src='" + response.data.data[i].avatar + "'></p>";
+                textHtml += "<td>" + response.data.data[i].first_name + "<br>" + response.data.data[i].email + img + "</td>";
+               // mail += "<td>" + response.data.data[i].first_name + img + "</td>";
+            }
+            rowDisplay.innerHTML = textHtml;
+
+        })
+    </script>
+    
+</body>
+</html>
