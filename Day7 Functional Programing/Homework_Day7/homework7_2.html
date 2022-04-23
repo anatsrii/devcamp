@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="homework7_2.js"></script>
+    <title>homework7_2</title>
+  </head>
+  <body>
+    <script>
+      let allCovidData = [];
+      axios.get('https://disease.sh/v3/covid-19/countries').then( function (response) {
+        // console.log(response);
+        const allCovidData = response.data;
+        console.log(allCovidData);
+        let target = allCovidData.filter( (allCovidData) => {
+          return allCovidData.todayRecovered});
+          console.log(target);
+
+        let target2 = target.map( (obj) => {
+          return obj.todayRecovered
+        })
+        console.log(target2);
+
+        let summary = target2.reduce( (num, sum) => {
+          return num + sum;
+        }, 0);
+        console.log(summary);
+
+        let deaths = allCovidData.filter( (allCovidData) => allCovidData.todayDeaths > 10);
+        console.log(deaths);
+        let country = deaths.map((obj)=> obj.country);
+        console.log(country)
+
+
+      });
+
+
+
+        // console.log(todayRecover);
+        // let result = todayRecover.reduce(calculator);
+        // console.log(result);
+        // function calculator (num , sum) {
+          //   return num + sum;
+          // }
+    </script>
+  </body>
+</html>
