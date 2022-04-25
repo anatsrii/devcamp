@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Hello</p>
+    <button id="btnPlus" onclick="increase">บวก</button>
+    <button id="btnMinus">ลบ</button>
+    <button id="btnReset">reset</button>
+    <p id="display"></p>
+
+    <script>
+      document.getElementById("btnPlus").addEventListener("click", increase);
+
+      function increase(event) {
+        let numberPlus = document.getElementById("btnPlus").value;
+        numberPlus += document.getElementById("btnPlus").value;
+        console.log(numberPlus);
+        document.getElementById("display").innerHTML = numberPlus.value;
+      }
+    </script>
+  </body>
+</html>
