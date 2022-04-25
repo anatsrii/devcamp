@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab1 Class</title>
+</head>
+<body>
+
+  <script>
+
+    class Employee { 
+      constructor (firstname, lastname, workperiod, salary) {
+        let _salary = salary;
+        let _workperiod = workperiod;
+
+        this.firstname = firstname;
+        this.lastname =lastname;
+        this.getWorkperiod = function () {
+          return _workperiod;
+        }
+        this.getSalary = function () {
+          return _salary;
+        }
+        
+      }
+    }
+   
+    let mrjane = new Employee('Anat', 'Sri', 3, 60000)
+
+
+    class Programmer extends Employee {
+        constructor (firstname, lastname, workperiod, salary) {
+          super (firstname, lastname, workperiod, salary);
+        }
+        getSalary () {
+          return getSalary() * 2;
+        }
+    }
+
+    let sukar = new Programmer('Sukar', 'Supercat', 3, 100000)
+
+  </script>
+  
+</body>
+</html>

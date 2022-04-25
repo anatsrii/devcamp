@@ -36,6 +36,4 @@ function reduce(arr, callbackFunction, initialize = null) {
 
   // ============================== //
 
-  `  Chaining คือการเอา method() arr มาเขียนเรียงต่อกัน 
-      เช่น .filter .map .reduce `
 
