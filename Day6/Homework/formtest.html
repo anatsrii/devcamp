@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  form {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+</style>
+
+<script>
+  // document.getElementById("exampleInputEmail").addEventListener("keyup");
+  // document.getElementById("btn").addEventListener("click", checkEmail);
+
+  
+  const checkEmail = function (event) {
+    getInput = event.target.value;
+    console.log("2", getInput)
+    if (getInput == "@gmail.com") {
+      document.getElementById("emailHelp").innerHTML = "We'll never share your email with anyone else."
+      document.getElementById("emailHelp").style.color = "black"
+      
+    } else {
+      document.getElementById("emailHelp").innerHTML = "Invalid email address please check again!"
+      document.getElementById("emailHelp").style.color = "red"
+    }
+  }
+
+  const submitData = function () {
+    alert("Your email submit")
+  }
+
+
+
+
+</script>
+
+<body>
+
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <br>
+      <input
+        type="text"
+        value=""
+        class="form-control"
+        id="exampleInputEmail1"
+        placeholder="Enter email"
+        onkeyup="checkEmail(event)"
+      />
+      <br>
+      <small id="emailHelp" class="form-text text-muted"
+        >We'll never share your email with anyone else.</small
+      >
+    </div>
+
+    <br>
+
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <br>
+      <input
+        type="password"
+        class="form-control"
+        id="exampleInputPassword1"
+        placeholder="Password"
+      />
+    </div>
+
+    <br>
+
+    <button type="submit" class="btn btn-primary" id="btn" onclick="submitData()" >Submit</button>
+  </form>
+  
+</body>
+</html>
