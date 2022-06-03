@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- import axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- bootstrap css -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <title>Program แปลงค่าเงิน</title>
+  </head>
+
+  <style>
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      margin: 20px;
+    }
+    .my-1 {
+      margin: 10px;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input {
+      height: min-content;
+    }
+    span {
+      text-align: left;
+    }
+    .my-2 {
+      margin: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    div {
+      margin: 10px;
+      justify-content: center;
+    }
+  </style>
+
+  <script>
+    // get api from apilayer.com
+
+    let usd =  axios.get('https://api.exchangeratesapi.io/latest?base=USD/access_key=rk6WThPUsaDcfhu43mnGum4B5aqvA6em').then((res) => {
+      console.log(res.data);
+    })
+
+    
+  </script>
+
+  <body>
+    <!-- Form -->
+    <form>
+      <div class="form-row align-items-center">
+        <div class="col-auto my-1">
+          <input
+            type="text"
+            class="form-control"
+            id="inputValue"
+            placeholder="Amount"
+          />
+          &nbsp; &nbsp;
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+            <option value="1">USD</option>
+            <option value="2">EUR</option>
+            <option value="3">THB</option>
+          </select>
+        </div>
+
+        <div class="col-auto my-2">
+          <span id="result"> ผลลัพธ์ </span>
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+            <option value="1">THB</option>
+            <option value="2">USD</option>
+            <option value="3">EUR</option>
+          </select>
+        </div>
+        <div class="col-auto my-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
