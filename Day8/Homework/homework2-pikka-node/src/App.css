@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+}
+
+.Card {
+  display: inline-flex;
+  justify-content: space-around;
+}
+
+.CardName {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 25%;
+  text-align: center;
+}
+
+img {
+  height: 250px;
+  width: 200px;
+}
+
+.Navbar {
+  margin: 30px;
+  display: flex;
+  justify-content: space-around;
+}

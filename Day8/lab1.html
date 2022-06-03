@@ -12,8 +12,8 @@
 
     class Employee { 
       constructor (firstname, lastname, workperiod, salary) {
-        let _salary = salary;
-        let _workperiod = workperiod;
+        this.salary = salary;
+        this.workperiod = workperiod;
 
         this.firstname = firstname;
         this.lastname =lastname;
@@ -21,21 +21,21 @@
           return _workperiod;
         }
         this.getSalary = function () {
-          return _salary;
+          return salary;
         }
         
       }
     }
-   
-    let mrjane = new Employee('Anat', 'Sri', 3, 60000)
-
-
+    
+    let mrjane = new Employee('Anat', 'Sri', 3, 60000);
+    
+    
     class Programmer extends Employee {
-        constructor (firstname, lastname, workperiod, salary) {
-          super (firstname, lastname, workperiod, salary);
-        }
-        getSalary () {
-          return getSalary() * 2;
+      constructor (firstname, lastname, workperiod, salary) {
+        super (firstname, lastname, workperiod, salary);
+      }
+      getSalary () {
+          return salary * 2;
         }
     }
 

@@ -1,0 +1,14 @@
+การบ้าน #1 - สร้าง Component
+
+1.1 ใช้ Create React App ในการสร้าง Project ชื่อ react-jsx1.1 หัดสร้าง Component แบบ Class จาก Lab 3 ใหม่ โดยแยก Component เป็น Component ละ 1 File ได้แก่ Header.js, Content.js, Footer.js และ import มารวมกันที่ไฟล์ App.js
+1.2 ใช้ Create React App ในการสร้าง Project ชื่อ react-jsx1.2 หัดสร้าง Component แบบ Function จาก Lab 3 ใหม่ โดยแยก Component เป็น Component ละ 1 File ได้แก่ Header.js, Content.js, Footer.js และ import มารวมกันที่ไฟล์ App.js
+ต้อง Create React App ใหม่ ห้าม Copy paste project เก่าเด็ดขาด!!
+
+
+
+
+    <div>
+        <div>Header</div>
+        <div>Content</div>
+        <div>Footer</div>
+    </div>
