@@ -1,12 +1,25 @@
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Tag, Avatar, Image, Button} from 'antd';
 import 'antd/dist/antd.css';
 
 const TableCom = ()=> {
+  
   const columns = [
     {
       title: 'Avatar',
-      dataIndex: 'avata',
-      key: 'avatar'
+      dataIndex: 'avatar',
+      key: 'avatar',
+      render: (_, {imgPath}) => (
+        <Avatar
+        src={
+          <Image
+            src={imgPath}
+            style={{
+              width: 30, height: 36
+            }}
+          />
+        }
+      />
+      )
     },
     {
       title: 'Name',
@@ -49,10 +62,10 @@ const TableCom = ()=> {
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
+      render: (_, test) => (
         <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
+          <a>Invite {test.name}</a>
+          <Button shape='round' danger >Delete</Button>
         </Space>
       ),
     },
@@ -64,6 +77,7 @@ const TableCom = ()=> {
       age: 32,
       address: 'New York No. 1 Lake Park',
       tags: ['nice', 'developer'],
+      imgPath: "https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     },
     {
       key: '2',
@@ -71,6 +85,7 @@ const TableCom = ()=> {
       age: 42,
       address: 'London No. 1 Lake Park',
       tags: ['loser'],
+      imgPath: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
     },
     {
       key: '3',
@@ -78,6 +93,7 @@ const TableCom = ()=> {
       age: 32,
       address: 'Sidney No. 1 Lake Park',
       tags: ['cool', 'teacher'],
+      imgPath: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=778&q=80"
     },
   ];
   return (
