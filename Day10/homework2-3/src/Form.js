@@ -11,6 +11,9 @@ import {
   Button,
 } from "antd";
 
+import { useState } from "react";
+
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -44,12 +47,50 @@ const tailFormItemLayout = {
   },
 };
 
+
 const FormCreate = () => {
   const [form] = Form.useForm();
+  
+  const [otherVal, setOther] = useState();
+  const [skill, setSkill] = useState();
+  const [isActive, setActive] = useState(true);
+
+  const toggle = ()=> {
+    console.log(isActive)
+    setActive(!isActive)
+    console.log(`after setActive `, isActive)
+    if (isActive) {
+      setSkill(
+        <Form.Item name="skill" label="Skill" >
+        <Select >
+          <Option value="React">React</Option>
+          <Option value="Flutter">Flutter</Option>
+          <Option value="Python">Python</Option>
+        </Select>
+      </Form.Item>
+      )
+    } else {
+      setSkill('')
+    }
+  }
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
+
+  const statusFn = (value) => {
+    if (value === "other") {
+      setOther(
+      <Form.Item name="other" label="Other" >
+      <Select >
+        <Option value="Chaina">Chaina</Option>
+        <Option value="Japan">Japan</Option>
+        <Option value="English">English</Option>
+      </Select>
+    </Form.Item>)
+    }
+  }
 
   return (
     <Form
@@ -60,40 +101,38 @@ const FormCreate = () => {
     >
       {/* input text */}
       <Form.Item
-        name="input-text"
-        label="Input Text"
-        rules={[{ required: true, message: "please insert input" }]}
+        name="first-name"
+        label="First Name"
+        rules={[{ required: true, message: "please input your First Name" }]}
       >
-        <Input placeholder="Input" style={{ placeItems: "center" }} />
+        <Input placeholder="First Name" style={{ placeItems: "center" }} max={50} />
       </Form.Item>
 
-      {/* input number */}
+      {/* Age input Number */}
       <Form.Item
-        name="input-number"
-        label="Input Number"
-        rules={[{ required: true, message: "please input number" }]}
-        initialValue={10}
+        name="age"
+        label="Age"
+        rules={[{ required: true, message: "please input your Age" }]}
       >
-        <InputNumber min={10} max={100} />
+        <InputNumber min={1} max={99} />
       </Form.Item>
-      {/* radio Input */}
+      {/* Gender radio Input */}
       <Form.Item
-        name="input-radio"
-        label="Input Radio:"
-        rules={[{ required: true, message: "please select radio" }]}
+        name="gender"
+        label="Gender"
+        rules={[{ required: true, message: "please select your Gender" }]}
       >
-        <Radio.Group value={1}>
-          <Radio value={1}>A</Radio>
-          <Radio value={2}>B</Radio>
-          <Radio value={3}>C</Radio>
-          <Radio value={4}>D</Radio>
+        <Radio.Group >
+          <Radio value={"Male"}>Male</Radio>
+          <Radio value={"Female"}>Female</Radio>
         </Radio.Group>
       </Form.Item>
 
-      {/* input select */}
-      <Form.Item name="input-select" label="Select" initialValue={"Chaiyaphum"}>
+      {/* Province input select */}
+      <Form.Item name="province" label="Province" initialValue={"Chaiyaphum"}>
         <Select
-          rules={[{ required: true, message: "please select Province" }]}
+          onSelect={statusFn}
+          rules={[{ required: true, message: "please select your Province" }]}
           placeholder="Select Province"
         >
           <Option value="Bangkok">Bangkok</Option>
@@ -101,12 +140,25 @@ const FormCreate = () => {
           <Option value="Chaiyaphum">Chaiyaphum</Option>
           <Option value="Khonkan">Khonkan</Option>
           <Option value="Saraburi">Saraburi</Option>
+          <Option value="other" >ต่างประเทศ</Option>
         </Select>
       </Form.Item>
 
-      {/* datepicker */}
+      {/* Other input select */}
+      {/* {otherVal} */}
+
+      {/* Skill */}
+      <Form.Item {...tailFormItemLayout}>
+        <Button type="primary" onClick={toggle}>
+          Skill
+        </Button>
+        </Form.Item>
+          {skill}
+
+
+      {/* Date datepicker https://momentjs.com/*/}
       <Form.Item
-        name="date-picker"
+        name="date"
         label="Date picked"
         rules={[{ required: true, message: "Please Picked up the date" }]}
       >
@@ -117,7 +169,7 @@ const FormCreate = () => {
       <Form.Item
         name="checkbox"
         label="Check Box"
-        rules={[{ required: true, message: "Please Picked up the date" }]}
+        rules={[{ required: true, message: "Agree or Disagree" }]}
       >
         <Checkbox.Group
           style={{
@@ -126,20 +178,12 @@ const FormCreate = () => {
         >
           <Row>
             <Col span={8}>
-              <Checkbox value="A">A</Checkbox>
+              <Checkbox value="agree">Agree</Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="B">B</Checkbox>
+              <Checkbox value="disagree">Disagree</Checkbox>
             </Col>
-            <Col span={8}>
-              <Checkbox value="C">C</Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox value="D">D</Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox value="E">E</Checkbox>
-            </Col>
+          
           </Row>
         </Checkbox.Group>
       </Form.Item>
