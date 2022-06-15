@@ -39,13 +39,7 @@ function App() {
         <FormCreate />
         
     </Content>
-    <Footer
-      style={{
-        textAlign: 'center',
-      }}
-    >
-      anat.srii@gmail.com
-    </Footer>
+  
   </Layout>
   </>
   );
