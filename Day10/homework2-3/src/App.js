@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import './App.css';
 import FormCreate from './Form';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 function App() {
   return (
