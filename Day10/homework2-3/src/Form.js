@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Button,
+  Modal,
 } from "antd";
 
 import { useState } from "react";
@@ -50,13 +51,32 @@ const tailFormItemLayout = {
 
 const FormCreate = () => {
   const [form] = Form.useForm();
-  
-  const [otherVal, setOther] = useState();
   const [skill, setSkill] = useState();
   const [isActive, setActive] = useState(true);
+  const [otherShow, setOtherShow] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  const submitData = () => {
+    if (formFailed === false) {
+      setShowModal(false)
+    } else setShowModal(true)
+  }
+  
+  const formFailed = () => {
+    setShowModal(false);
+    return false;
+  }
+
+  const modalOk = (values) => {
+    console.log(`Modal Data`, values)
+    setShowModal(false)
+  }
+
+  const modalCancle = ()=> {
+    setShowModal(false)
+  }
 
   const toggle = ()=> {
-    console.log(isActive)
     setActive(!isActive)
     console.log(`after setActive `, isActive)
     if (isActive) {
@@ -81,14 +101,11 @@ const FormCreate = () => {
 
   const statusFn = (value) => {
     if (value === "other") {
-      setOther(
-      <Form.Item name="other" label="Other" >
-      <Select >
-        <Option value="Chaina">Chaina</Option>
-        <Option value="Japan">Japan</Option>
-        <Option value="English">English</Option>
-      </Select>
-    </Form.Item>)
+      setOtherShow(false);
+      return false;
+    } else {
+      setOtherShow(true);
+      return true;
     }
   }
 
@@ -97,11 +114,12 @@ const FormCreate = () => {
       {...formItemLayout}
       form={form}
       onFinish={onFinish}
+      onFinishFailed={formFailed}
       scrollToFirstError
     >
       {/* input text */}
       <Form.Item
-        name="first-name"
+        name="Fname"
         label="First Name"
         rules={[{ required: true, message: "please input your First Name" }]}
       >
@@ -131,7 +149,7 @@ const FormCreate = () => {
       {/* Province input select */}
       <Form.Item name="province" label="Province" initialValue={"Chaiyaphum"}>
         <Select
-          onSelect={statusFn}
+          onChange={statusFn}
           rules={[{ required: true, message: "please select your Province" }]}
           placeholder="Select Province"
         >
@@ -145,7 +163,13 @@ const FormCreate = () => {
       </Form.Item>
 
       {/* Other input select */}
-      {/* {otherVal} */}
+      <Form.Item name="other" label="Other" >
+      <Select disabled={otherShow}>
+        <Option value="Chaina">Chaina</Option>
+        <Option value="Japan">Japan</Option>
+        <Option value="English">English</Option>
+      </Select>
+      </Form.Item>
 
       {/* Skill */}
       <Form.Item {...tailFormItemLayout}>
@@ -190,10 +214,19 @@ const FormCreate = () => {
 
       {/* button */}
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={submitData}>
           Submit
         </Button>
       </Form.Item>
+      <Modal
+        title="Form Data"
+        visible={showModal}
+        onOk={modalOk}
+        onCancel={modalCancle}
+        centered
+      >
+        <p></p>
+      </Modal>
     </Form>
   );
 };
