@@ -12,8 +12,8 @@ import {
   Modal,
 } from "antd";
 
-import { useState } from "react";
 
+import { useState } from "react";
 
 const { Option } = Select;
 
@@ -48,66 +48,84 @@ const tailFormItemLayout = {
   },
 };
 
-
 const FormCreate = () => {
   const [form] = Form.useForm();
   const [skill, setSkill] = useState();
   const [isActive, setActive] = useState(true);
   const [otherShow, setOtherShow] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [province, setProvince] = useState('');
+  const [other, setOther] = useState('');
+  const [agree, setAgree] = useState('');
+  const [skillVal, setSkillVal] = useState('')
+  const [dateTime, setDate] = useState('');
 
   const submitData = () => {
     if (formFailed === false) {
-      setShowModal(false)
-    } else setShowModal(true)
-  }
-  
+      setShowModal(false);
+    } else {
+      setShowModal(true);
+      
+    }
+  };
+
   const formFailed = () => {
     setShowModal(false);
     return false;
-  }
+  };
 
-  const modalOk = (values) => {
-    console.log(`Modal Data`, values)
-    setShowModal(false)
-  }
+  const modalOk = () => {
+    //Send values to next process
+    setShowModal(false);
+  };
 
-  const modalCancle = ()=> {
-    setShowModal(false)
-  }
+  const modalCancle = () => {
+    setShowModal(false);
+  };
 
-  const toggle = ()=> {
-    setActive(!isActive)
-    console.log(`after setActive `, isActive)
+  const toggle = () => {
+    setActive(!isActive);
+    console.log(`after setActive `, isActive);
     if (isActive) {
       setSkill(
-        <Form.Item name="skill" label="Skill" >
-        <Select >
-          <Option value="React">React</Option>
-          <Option value="Flutter">Flutter</Option>
-          <Option value="Python">Python</Option>
-        </Select>
-      </Form.Item>
-      )
+        <Form.Item name="skills" label="Skill" initialValue={"None"}>
+          <Select>
+            <Option value="React">React</Option>
+            <Option value="Flutter">Flutter</Option>
+            <Option value="Python">Python</Option>
+          </Select>
+        </Form.Item>
+      );
     } else {
-      setSkill('')
+      setSkill("");
     }
-  }
+  };
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
-  };
-
+    console.log(values.date)
+    setFirstName(values.Fname);
+    setAge(values.age);
+    setGender(values.gender);
+    setProvince(values.province);
+    setOther(values.other);
+    setSkillVal(values.skills);
+    setDate(values.date.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+    setAgree(values.checkbox);
+  }
 
   const statusFn = (value) => {
-    if (value === "other") {
+    if (value === "ต่างประเทศ") {
       setOtherShow(false);
       return false;
     } else {
       setOtherShow(true);
       return true;
     }
-  }
+  };
 
   return (
     <Form
@@ -123,7 +141,11 @@ const FormCreate = () => {
         label="First Name"
         rules={[{ required: true, message: "please input your First Name" }]}
       >
-        <Input placeholder="First Name" style={{ placeItems: "center" }} max={50} />
+        <Input
+          placeholder="First Name"
+          style={{ placeItems: "center" }}
+          max={50}
+        />
       </Form.Item>
 
       {/* Age input Number */}
@@ -140,7 +162,7 @@ const FormCreate = () => {
         label="Gender"
         rules={[{ required: true, message: "please select your Gender" }]}
       >
-        <Radio.Group >
+        <Radio.Group>
           <Radio value={"Male"}>Male</Radio>
           <Radio value={"Female"}>Female</Radio>
         </Radio.Group>
@@ -158,17 +180,17 @@ const FormCreate = () => {
           <Option value="Chaiyaphum">Chaiyaphum</Option>
           <Option value="Khonkan">Khonkan</Option>
           <Option value="Saraburi">Saraburi</Option>
-          <Option value="other" >ต่างประเทศ</Option>
+          <Option value="ต่างประเทศ">ต่างประเทศ</Option>
         </Select>
       </Form.Item>
 
       {/* Other input select */}
-      <Form.Item name="other" label="Other" >
-      <Select disabled={otherShow}>
-        <Option value="Chaina">Chaina</Option>
-        <Option value="Japan">Japan</Option>
-        <Option value="English">English</Option>
-      </Select>
+      <Form.Item name="other" label="Other" initialValue={"None"}>
+        <Select disabled={otherShow}>
+          <Option value="Chaina">Chaina</Option>
+          <Option value="Japan">Japan</Option>
+          <Option value="English">English</Option>
+        </Select>
       </Form.Item>
 
       {/* Skill */}
@@ -176,9 +198,8 @@ const FormCreate = () => {
         <Button type="primary" onClick={toggle}>
           Skill
         </Button>
-        </Form.Item>
-          {skill}
-
+      </Form.Item>
+      {skill}
 
       {/* Date datepicker https://momentjs.com/*/}
       <Form.Item
@@ -202,12 +223,11 @@ const FormCreate = () => {
         >
           <Row>
             <Col span={8}>
-              <Checkbox value="agree">Agree</Checkbox>
+              <Checkbox value="yes">Agree</Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="disagree">Disagree</Checkbox>
+              <Checkbox value="no">Disagree</Checkbox>
             </Col>
-          
           </Row>
         </Checkbox.Group>
       </Form.Item>
@@ -225,7 +245,14 @@ const FormCreate = () => {
         onCancel={modalCancle}
         centered
       >
-        <p></p>
+       <p>First Name {firstName}</p> 
+       <p>Age {age}</p>
+       <p>Gender {gender}</p>
+       <p>province {province}</p>
+       <p>Other {other}</p>
+       <p>Skill {skillVal}</p>
+       <p>Date {dateTime}</p>
+       <p>Agreement {agree}</p>
       </Modal>
     </Form>
   );
