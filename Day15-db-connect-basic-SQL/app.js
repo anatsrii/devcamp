@@ -3,28 +3,26 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 // require('dotenv').config();
+const connectDB = require('./toDB')
 
 app.get("/user", (req, res) => {
-  const connection = mysql.createConnection({
-    // host: `${process.env.HOST}`,
-    // user: `${process.env.USER}`,
-    // password: `${process.env.PASSWORD}`,
-    // port: `${process.env.PORT}`
-    host: "34.126.137.203",
-    user: "hero",
-    password: "011866303",
-    database: "aptos",
-    port: "3306",
-  });
-
+  const connection = mysql.createConnection(connectDB);
+  // const connection = mysql.createConnection({
+  //   host: `${process.env.HOST}`,
+  //   user: `${process.env.USER}`,
+  //   password: `${process.env.PASSWORD}`,
+  //   database: `${process.env.DATABASE}`,
+  //   port: `${process.env.PORT}`
+  // });
+  
   // เปิด connection ไปที่ database
   connection.connect();
 
-  connection.query("SELECT * from user", (err, rows, fields) => {
+  connection.query("SELECT city, last_update from city", (err, rows, fields) => {
     if (err) throw err;
 
     // return response กลับไปหา client โดยแปลง record เป็น json array
-    res.json(rows);
+    res.status(200).json(rows);
 
     // ปิด connection
     connection.end();
