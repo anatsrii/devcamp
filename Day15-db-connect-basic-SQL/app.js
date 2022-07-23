@@ -8,7 +8,7 @@ const port = 3000;
 const db = require('./toDB');
 
 const corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: 'http://localhost:3005',
   Credentials: true,
   
 }
@@ -38,7 +38,7 @@ app.get("/user", (req, res) => {
   // เปิด connection ไปที่ database
   connection.connect();
 
-  connection.query("SELECT * FROM employee", (err, rows, fields) => {
+  connection.query(`SELECT * FROM user`, (err, rows, fields) => {
     if (err) throw err;
 
     // return response กลับไปหา client โดยแปลง record เป็น json array
@@ -54,20 +54,17 @@ app.post('/create-user', (req, res)=> {
   console.log(req.body);
   const {firstname, lastname, age} = req.body;
   const connection = mysql.createConnection(db);
-  async ()=> { 
-    connection.connect();
-    await connection.query(`INSERT INTO user (firstname, lastname, age) VALUES ('${firstname}', '${lastname}', ${age});`, (err, rows)=> {
+  connection.connect();
+  connection.query(`INSERT INTO user (firstname, lastname, age) VALUES ('${firstname}', '${lastname}', ${age});`, (err, rows)=> {
       if (err) throw err;
       res.status(201);
       res.json(rows);
       connection.end();
     });
-  // let sqlCreate = `INSERT INTO employee (firstname, lastname, age) VALUES (${firstname}, ${lastname}, ${age});`
-  }
-})
+});
 
 app.put('/edit-user', (req, res)=> {
-  let editId = req.id;
+  let editId = params.id;
   let {firstnameValue, lastnameValue, ageValue} = req.body;
   const connection = mysql.createConnection(db);
   connection.connect();
