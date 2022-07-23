@@ -1,4 +1,4 @@
-import axios from "../config/Axios"
+import axios from "../config/axios";
 import { useState, useEffect } from "react"
 import { Table, Space, Button, Modal } from "antd";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -56,7 +56,7 @@ function ManageUser() {
       icon: <ExclamationCircleOutlined />,
   
       onOk() {
-        axios.delete(`/delete-user/${id}`)
+        axios.delete(`/delete-user/:${id}`)
         fetchData();
       },
   

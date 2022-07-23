@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, Form, Input, InputNumber } from 'antd';
-import axios from '../config/Axios';
+import axios from '../config/axios';
 
 const layout = {
   labelCol: {
@@ -27,19 +27,26 @@ function CreateUser() {
   const [firstnameField, setFirstname] = useState('');
   const [lastnameField, setLastname] = useState('');
   const [ageField, setAge] = useState('');
+
+  const handleFirstname = (e) => {
+    setFirstname(e.target.value)
+  }
+
+  const handleLastname = (e) => {
+    setLastname(e.target.value);
+  }
+
+  const handleAge = (e) => {
+    setAge(e.target.value);
+  }
   
   const onFinish =  (values) => {
-    console.log(values)
+    console.log("onfinish values", values);
+    axios.post('/create-user', {firstname: firstnameField, lastname: lastnameField, age: ageField})
   };
   
-  const submit = async () => {
-    console.log(firstnameField, lastnameField, ageField);
-    await axios.post('/create-user', {firstname: firstnameField,
-    lastname: lastnameField,
-  age: ageField});
-    setFirstname('');
-    setLastname('');
-    setAge('');
+  const submit =  () => {
+    console.log("Submit")
   }
 
   return(
@@ -49,6 +56,7 @@ function CreateUser() {
       <Form.Item
         name={'firstname'}
         label="Name"
+        onChange={handleFirstname}
         rules={[
           {
             required: true,
@@ -60,6 +68,7 @@ function CreateUser() {
       <Form.Item
         name={'lastname'}
         label="Lastname"
+        onChange={handleLastname}
         rules={[
           {
             required: true
@@ -71,6 +80,7 @@ function CreateUser() {
       <Form.Item
         name={'age'}
         label="Age"
+        onChange={handleAge}
         rules={[
           {
             type: 'number',
