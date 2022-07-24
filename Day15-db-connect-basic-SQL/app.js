@@ -1,86 +1,107 @@
 const mysql = require("mysql2");
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
-// require('dotenv').config();
-const db = require('./toDB');
-
-const corsOptions = {
-  origin: 'http://localhost:3005',
-  Credentials: true,
-  
-}
+const db = require("./Config/toDB")
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors(corsOptions));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
 
-app.get("/user", (req, res) => {
-  const connection = mysql.createConnection(db);
-  // const connection = mysql.createConnection({
-  //   host: `${process.env.HOST}`,
-  //   user: `${process.env.USER}`,
-  //   password: `${process.env.PASSWORD}`,
-  //   database: `${process.env.DATABASE}`,
-  //   port: `${process.env.PORT}`
-  // });
-  
-  // เปิด connection ไปที่ database
-  connection.connect();
-
-  connection.query(`SELECT * FROM user`, (err, rows, fields) => {
-    if (err) throw err;
-
-    // return response กลับไปหา client โดยแปลง record เป็น json array
-    res.status(200)
-    res.json(rows);
-
-    // ปิด connection
-    connection.end();
-  });
-});
-
-app.post('/create-user', (req, res)=> {
-  console.log(req.body);
-  const {firstname, lastname, age} = req.body;
+app.get("/user", async (req, res) => {
   const connection = mysql.createConnection(db);
   connection.connect();
-  connection.query(`INSERT INTO user (firstname, lastname, age) VALUES ('${firstname}', '${lastname}', ${age});`, (err, rows)=> {
-      if (err) throw err;
-      res.status(201);
-      res.json(rows);
-      connection.end();
-    });
-});
-
-app.put('/edit-user', (req, res)=> {
-  let editId = params.id;
-  let {firstnameValue, lastnameValue, ageValue} = req.body;
-  const connection = mysql.createConnection(db);
-  connection.connect();
-  connection.query(`UPDATE employee
-                    SET firstname = '${firstnameValue}', lastname = '${lastnameValue}', age = '${ageValue}'
-                    WHERE id = '${editId}'`);
-  res.status(201).send({message: "Edit user successfull"});
+   try {
+    connection.query(`SELECT * FROM user`, (err, rows, fields) => {
+      if (err) {
+        console.log("Error while query all from database", err);
+        return res.status(400).send();
+      }
+      return res.status(200).json(rows);
+    })
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
   connection.end();
-})
+});
 
-app.delete('/delete-user', (req, res)=> {
-  let editId = req.params.id;
+app.post("/create-user", async (req, res) => {
+  console.log(req.body);
+  const { firstname, lastname, age } = req.body;
   const connection = mysql.createConnection(db);
   connection.connect();
-  connection.query(`DELETE FROM user WHERE id='${editId}'`);
-  res.status(200)
-})
+  try {
+    connection.query(
+      `INSERT INTO user (firstname, lastname, age) VALUES (?, ?, ?)`,
+      [firstname, lastname, age],
+      (err, results) => {
+        if (err) throw err;
+        res.status(201);
+        res.json(results);
+      }
+      );
+    } 
+    catch (err) {
+      console.log(err);
+      res.status(500).send();
+    }  
+    connection.end();
+});
+
+app.put("/edit-user", async (req, res) => {
+  let id = req.params.id;
+  let { firstname, lastname, age } = req.body;
+  const connection = mysql.createConnection(db);
+  connection.connect();
+  try {
+    connection.query(
+      `UPDATE user
+                    SET firstname = ?, lastname = ?, age = ?
+                    WHERE id = ?`,
+      [firstname, lastname, age, id],
+      (err, results, fields) => {
+        if (err) {
+          console.log("Error while updating user", err);
+          return res.status(400).send();
+        }
+        return res
+          .status(201)
+          .json(results, { message: "has been update successfull" });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+  connection.end();
+});
+
+app.delete("/delete-user/:id", async (req, res) => {
+  let id = req.params.id;
+  const connection = mysql.createConnection(db);
+  connection.connect();
+  try {
+    connection.query(
+      `DELETE FROM user WHERE user.id = ?`, [id],
+      (err, results, fields) => {
+        if (err) {
+          console.log("CANNOT DELETE. No user in database");
+          return res.status(400).send();
+        } else {
+          return res.status(200).json({message: "Delete user successfull!"})
+        }
+      }
+    );
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+  connection.end();
+});
 
 app.listen(port, () => console.log(`Server start on port ${port}`));
