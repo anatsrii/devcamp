@@ -1,8 +1,8 @@
-import axios from "../config/axios";
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { Table, Space, Button, Modal } from "antd";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from "moment";
+import axios from "../config/axios";
 
 const {confirm} = Modal
 
@@ -51,13 +51,17 @@ function ManageUser() {
   }
   
   const deleteUser = (id, firstname) => {
+    const onOkFn = (id) => {
+      console.log(id);
+      axios.delete(`/delete-user/:${id}`);
+      fetchData();
+    }
     confirm({
-      title: `Do you want to delete ${firstname}?`,
+      title: `Do you want to delete this user?`,
       icon: <ExclamationCircleOutlined />,
   
       onOk() {
-        axios.delete(`/delete-user/:${id}`)
-        fetchData();
+        onOkFn(id);
       },
   
       onCancel() {
