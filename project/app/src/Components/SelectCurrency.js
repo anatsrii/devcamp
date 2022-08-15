@@ -13,8 +13,8 @@ function SelectCurrency(props) {
       <Box>
         <TextField type={"number"} onChange={onchangeRate} value={resultValue}> </TextField>
 
-        <FormControl sx={{ m: 1, minWidth: 80 }} size="small">
-          <InputLabel id="demo-select-small">สกุลเงิน</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 30 , maxHeight: 10}} size="small">
+          <InputLabel id="demo-select-small">Currency</InputLabel>
 
           <Select
             labelId="demo-select-small"
