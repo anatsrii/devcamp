@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
+const port = 3001;
 const db = require("./Config/toDB")
 
 app.use(bodyParser.json());
@@ -13,9 +13,9 @@ app.use(cors());
 
 app.get("/user", async (req, res) => {
   const connection = mysql.createConnection(db);
-  connection.connect();
+  await connection.connect();
    try {
-    connection.query(`SELECT * FROM user`, (err, rows, fields) => {
+    connection.query('SELECT * FROM `user`', (err, rows, fields) => {
       if (err) {
         console.log("Error while query all from database", err);
         return res.status(400).send();
