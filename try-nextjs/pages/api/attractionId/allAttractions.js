@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 
 export default async function handler(req, res) {
   const dbconnection = await mysql.createConnection({
@@ -6,16 +6,16 @@ export default async function handler(req, res) {
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_DATABASE,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
   });
+
   try {
-    const query = "SELECT * from `attractions`";
+    const sqlCommand = "SELECT * from `attractions`";
     const values = [];
-    const [data] = await dbconnection.execute(query, values);
+    const [data] = await dbconnection.execute(sqlCommand, values);
     dbconnection.end();
-    res.status(200).json([data]);
+    res.status(200).json({results: data});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
