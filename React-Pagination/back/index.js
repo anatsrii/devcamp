@@ -12,14 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/attractions', async function (req, res)  {
-  const connection = await mysql.createConnection( dbConnect
-  //   {
-  //   host: "192.168.88.117",
-  //   user: "mrjane", 
-  //   password: "011866303",
-  //   database: "try_nextjs"
-  // }
-  );
+  const connection = await mysql.createConnection(dbConnect);
+  console.log(dbConnect);
   connection.connect();
  
   await connection.query("SELECT * FROM `attractions`",(err, rows, fields)=> {
