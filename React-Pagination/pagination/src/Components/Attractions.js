@@ -32,7 +32,7 @@ export default function Attractions() {
         <Grid container spacing={{xs: 2, md: 3, lg: 4}}>
           {dataAttractions.map((data) => {
             return (
-              <Grid key={data.id} item sm={12} md={6} lg={4}>
+              <Grid key={data.id} item sm={4} md={6} lg={12}>
                 <Card >
                   <CardHeader title={data.name} />
                   <CardMedia

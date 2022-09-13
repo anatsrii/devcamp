@@ -28,7 +28,7 @@ const getIdAttraction = async (req, res) => {
   let sqlCommand = "SELECT * FROM `attractions` WHERE `id` = ?";
   await connection.query(sqlCommand, [id], (err, rows) => {
     if (err) throw err;
-    res.status(200).json(rows[0]);
+    res.status(200).json(rows);
     console.log("Query complete");
   });
   connection.end(()=> console.log("Function getIdAttraction disconnect to database"));
