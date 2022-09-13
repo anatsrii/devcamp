@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { CardHeader, Container, Grid } from "@mui/material";
+import { CardHeader, Container, Grid, } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 
-export default function AttractionsComponent() {
+export default function Attractions() {
+  const navigate = useNavigate();
   const [dataAttractions, setDataAttractions] = useState([]);
 
   useEffect(() => {
@@ -21,6 +23,8 @@ export default function AttractionsComponent() {
     };
     getData();
   }, []);
+
+  
 
   return (
     <div>
@@ -47,7 +51,7 @@ export default function AttractionsComponent() {
                   </CardContent>
                   <CardActions>
                     <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" onClick={()=> navigate(`/attraction/${data.id}`)}>Learn More</Button>
                   </CardActions>
                 </Card>
               </Grid>

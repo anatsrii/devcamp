@@ -1,11 +1,14 @@
-import AttractionsComponent from './Components/Attractions'
-import './App.css';
+import Attractions from "./Components/Attractions";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import IdAttraction from "./Components/IdAttraction";
 
 function App() {
   return (
-    <div className="App">
-      <AttractionsComponent />
-    </div>
+    <Routes>
+      <Route path="/" element={<Attractions />} /> 
+      <Route path="/attraction/:attractionId" element={<IdAttraction/>} />
+    </Routes>
   );
 }
 
